@@ -35,7 +35,7 @@ int		add_pos(std::map<int, char> *tab, char c, int v, int h)
 	return (1);
 }
 
-void	loop(std::map<int, char> tab, int db, int cc)
+void	loop(std::map<int, char> tab, int db, int cc, int ia)
 {
 	int	t = -1, h, v, val, pos, cap[2];
 	std::string in;
@@ -49,34 +49,35 @@ void	loop(std::map<int, char> tab, int db, int cc)
 		print_tab(tab);
 		val = 0;
 		std::cout << "> Joueur : " << t % 2 + 1 << std::endl;
-		while (val == 0)
-		{
-			std::cout << "> Position vertical : ";
-			std::cin >> in;
-			if (in == "quit")
-				return;
-			v = stoi(in);
-			std::cout << "> Position horizontal : ";
-			std::cin >> in;
-			if (in == "quit")
-				return;
-			h = stoi(in);
-			if (h <= 19 && v <= 19 && h > 0 && v > 0)
-				if (t % 2 == 1)
-					val = add_pos(&tab, 'x', v, h);
-				else
-					val = add_pos(&tab, 'o', v, h);
-			if (double_trois(tab, (v - 1) * 19 + h - 1) != 0 && db == 1)
+		if (ia == 0 || t % 2 == 0)
+			while (val == 0)
 			{
-				tab[(v - 1) * 19 + h - 1] = '-';
-				val = 0;
+				std::cout << "> Position vertical : ";
+				std::cin >> in;
+				if (in == "quit")
+					return;
+				v = stoi(in);
+				std::cout << "> Position horizontal : ";
+				std::cin >> in;
+				if (in == "quit")
+					return;
+				h = stoi(in);
+				if (h <= 19 && v <= 19 && h > 0 && v > 0)
+					if (t % 2 == 1)
+						val = add_pos(&tab, 'x', v, h);
+					else
+						val = add_pos(&tab, 'o', v, h);
+				if (double_trois(tab, (v - 1) * 19 + h - 1) != 0 && db == 1)
+				{
+					tab[(v - 1) * 19 + h - 1] = '-';
+					val = 0;
+				}
+				if (val == 0)
+				{
+					std::cout << "error" << std::endl;
+					print_tab(tab);
+				}
 			}
-			if (val == 0)
-			{
-				std::cout << "error" << std::endl;
-				print_tab(tab);
-			}
-		}
 		taken(&tab, (v - 1) * 19 + h - 1, &(cap[0]), &(cap[1]));
 	}
 	print_tab(tab);
@@ -99,7 +100,7 @@ std::map<int, char>	create()
 
 int main()
 {
-	int	db = 1, cc = 1;
+	int	db = 1, cc = 1, ia = 1;
 	std::string tmp;
 
 	std::cout << "Activé la règle du double 3 ? (Oui / Non)" << std::endl;
@@ -110,8 +111,12 @@ int main()
 	std::cin >> tmp;
 	if (tmp == "Non" || tmp == "non" || tmp == "NON")
 		cc = 0;
+	std::cout << "Jouer contre l'IA ? (Oui / Non)" << std::endl;
+	std::cin >> tmp;
+	if (tmp == "Non" || tmp == "non" || tmp == "NON")
+		ia = 0;
 
 	std::map<int, char>	tab = create();
-	loop(tab, db, cc);
+	loop(tab, db, cc, ia);
 	return 0;
 }
