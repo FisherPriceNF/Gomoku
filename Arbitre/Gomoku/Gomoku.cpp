@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Gomoku.h"
+#include "IA.hh"
 
 void	print_tab(std::map<int, char> tab)
 {
@@ -35,12 +36,14 @@ int		add_pos(std::map<int, char> *tab, char c, int v, int h)
 	return (1);
 }
 
-void	loop(std::map<int, char> tab, int db, int cc, int ia)
+void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 {
 	int	t = -1, h, v, val, pos, cap[2];
 	std::string in;
+	IA	*ia = new IA(cc, db, 'x', 'o');
+	if (iat == 0)
+		ia = new IA(cc, db, 'o', 'x');
 
-	std::cout << "here" << std::endl;
 	cap[0] = 0;
 	cap[1] = 1;
 
@@ -49,7 +52,7 @@ void	loop(std::map<int, char> tab, int db, int cc, int ia)
 		print_tab(tab);
 		val = 0;
 		std::cout << "> Joueur : " << t % 2 + 1 << std::endl;
-		if (ia == 0 || t % 2 == 0)
+		if (ian == 0 || t % 2 != iat)
 			while (val == 0)
 			{
 				std::cout << "> Position vertical : ";
@@ -78,6 +81,8 @@ void	loop(std::map<int, char> tab, int db, int cc, int ia)
 					print_tab(tab);
 				}
 			}
+		else if (ian == 1 && t % 2 == iat)
+			tab = ia->Play(tab);
 		taken(&tab, (v - 1) * 19 + h - 1, &(cap[0]), &(cap[1]));
 	}
 	print_tab(tab);
@@ -87,7 +92,7 @@ void	loop(std::map<int, char> tab, int db, int cc, int ia)
 	else if (cap[1] >= 10)
 		std::cout << "o" << std::endl;
 	else
-		std::c	out << check(tab, cc) << std::endl;
+		std::cout << check(tab, cc) << std::endl;
 }
 
 std::map<int, char>	create()
@@ -100,23 +105,33 @@ std::map<int, char>	create()
 
 int main()
 {
-	int	db = 1, cc = 1, ia = 1;
+	int	db = 1, cc = 1, ia = 1, iat = 0;
 	std::string tmp;
 
-	std::cout << "Activé la règle du double 3 ? (Oui / Non)" << std::endl;
+	std::cout << "Activer la regle du double 3 ? (Oui / Non)" << std::endl;
 	std::cin >> tmp;
 	if (tmp == "Non" || tmp == "non" || tmp == "NON")
 		db = 0;
-	std::cout << "Activé la règle du cinq cassable ? (Oui / Non)" << std::endl;
-	std::cin >> tmp;
-	if (tmp == "Non" || tmp == "non" || tmp == "NON")
-		cc = 0;
-	std::cout << "Jouer contre l'IA ? (Oui / Non)" << std::endl;
-	std::cin >> tmp;
-	if (tmp == "Non" || tmp == "non" || tmp == "NON")
-		ia = 0;
-
+	if (tmp != "all")
+	{
+		std::cout << "Activer la regle du cinq cassable ? (Oui / Non)" << std::endl;
+		std::cin >> tmp;
+		if (tmp == "Non" || tmp == "non" || tmp == "NON")
+			cc = 0;
+		std::cout << "Jouer contre l'IA ? (Oui / Non)" << std::endl;
+		std::cin >> tmp;
+		if (tmp == "Non" || tmp == "non" || tmp == "NON")
+			ia = 0;
+		if (ia == 1)
+		{
+			std::cout << "L'IA commence ? (Oui / Non)" << std::endl;
+			std::cin >> tmp;
+			if (tmp == "Non" || tmp == "non" || tmp == "NON")
+				iat = 1;
+		}
+	}
+	std::cout << cc << db << ia << iat << std::endl;
 	std::map<int, char>	tab = create();
-	loop(tab, db, cc, ia);
+	loop(tab, db, cc, ia, iat);
 	return 0;
 }
