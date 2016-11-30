@@ -1,0 +1,15 @@
+
+
+Début IA
+	Lecture des cases remplit
+	Si null
+		case à traiter centre + 3
+	Si non null
+		encadrer case à traiter + 3
+	Recupérer case d'importance dans case à traiter
+	Si plus que une	---------- Flag 1	
+		Thread de min/max -> un thread par case
+			Pour chaque thread faire une estimation de quel est le coup suivant de l'adversaire
+			Déterminer les plus probable
+				Faire un thread pour chaque probabilité
+					Boucler sur Flag 1 jusqu'à TimeOut
