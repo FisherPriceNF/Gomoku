@@ -45,7 +45,7 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 		ia = new IA(cc, db, 'o', 'x');
 
 	cap[0] = 0;
-	cap[1] = 1;
+	cap[1] = 0;
 
 	while (check(tab, cc) == 0 && ++t >= 0 && cap[0] < 10 && cap[1] < 10)
 	{
