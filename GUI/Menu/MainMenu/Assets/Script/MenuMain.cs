@@ -7,6 +7,7 @@ public class MenuMain : MonoBehaviour {
     
      private bool _isFirstMenu = false;
      private bool _isOptionMenu = true;
+     private bool _isRegleTrois = false;
 
     // Use this for initialisation
     void     Start()
@@ -62,11 +63,11 @@ public class MenuMain : MonoBehaviour {
             GUI.TextField(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 20, 271, 36), "Activer la régle de trois ?");
             if (GUI.Button(new Rect(Screen.width / 2 + 73, Screen.height / 2 + 63, 50, 36), "Oui"))
             {
-            
+                _isRegleTrois = true;
             }
             if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 63, 50, 36), "Non"))
             {
-
+                _isRegleTrois = false;
             }
             if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 123, 271, 36), "Return Game"))
             {
