@@ -5,11 +5,17 @@ using System;
 
 public class MenuMain : MonoBehaviour {
     
+<<<<<<< HEAD
     private bool _isFirstMenu = true;
     private bool _isOptionMenu = false;
     private bool _isChoixGame = false;
     private bool _isRegleDoubleTrois = false;
     private bool _isRegleCinqCasse = false;
+=======
+     private bool _isFirstMenu = false;
+     private bool _isOptionMenu = true;
+     private bool _isRegleTrois = false;
+>>>>>>> 4377fb6ea5c2be748eecc82f2be1ca3f35aed64d
 
     // Use this for initialisation
     void     Start()
@@ -107,15 +113,23 @@ public class MenuMain : MonoBehaviour {
         {
             if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 23, 271, 36), "Player 1"))
             {
+<<<<<<< HEAD
             #pragma warning disable CS0618 // Le type ou le membre est obsolète
                 Application.LoadLevel("Level01"); // Avec Joueur.
             #pragma warning restore CS0618 // Le type ou le membre est obsolète
+=======
+                _isRegleTrois = true;
+>>>>>>> 4377fb6ea5c2be748eecc82f2be1ca3f35aed64d
             }
             if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 73, 271, 36), "Player 2"))
             {
+<<<<<<< HEAD
             #pragma warning disable CS0618 // Le type ou le membre est obsolète
                 Application.LoadLevel("Level01"); // Avec AI.
             #pragma warning restore CS0618 // Le type ou le membre est obsolète
+=======
+                _isRegleTrois = false;
+>>>>>>> 4377fb6ea5c2be748eecc82f2be1ca3f35aed64d
             }
             if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 123, 271, 36), "Return Game"))
             {
