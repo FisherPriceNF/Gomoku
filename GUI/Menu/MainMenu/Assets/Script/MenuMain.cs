@@ -5,8 +5,11 @@ using System;
 
 public class MenuMain : MonoBehaviour {
     
-     private bool _isFirstMenu = false;
-     private bool _isOptionMenu = true;
+    private bool _isFirstMenu = true;
+    private bool _isOptionMenu = false;
+    private bool _isChoixGame = false;
+    private bool _isRegleDoubleTrois = false;
+    private bool _isRegleCinqCasse = false;
 
     // Use this for initialisation
     void     Start()
@@ -23,8 +26,8 @@ public class MenuMain : MonoBehaviour {
     void     OnGUI()
     {
         FirstMenu();
-        LoadGameMenu();
         OptionsMenu();
+        OptionsGame();
     }
 
     void    FirstMenu()
@@ -33,13 +36,14 @@ public class MenuMain : MonoBehaviour {
         {
             if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 23, 271, 36),"New Game"))
             {
-                #pragma warning disable CS0618 // Le type ou le membre est obsolète
-                Application.LoadLevel("Level01");
-                #pragma warning restore CS0618 // Le type ou le membre est obsolète
+                _isFirstMenu = false;
+                _isChoixGame = true;
+                _isOptionMenu = false;
             }
             if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 73, 271, 36), "Options"))
             {
                 _isFirstMenu = false;
+                _isChoixGame = false;
                 _isOptionMenu = true;
                 this.OptionsMenu();
             }
@@ -50,28 +54,74 @@ public class MenuMain : MonoBehaviour {
         }
     }
 
-    void    LoadGameMenu()
-    {
-
-    }
-
     void    OptionsMenu()
     {
         if (this._isOptionMenu)
         {
-            GUI.TextField(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 20, 271, 36), "Activer la régle de trois ?");
-            if (GUI.Button(new Rect(Screen.width / 2 + 73, Screen.height / 2 + 63, 50, 36), "Oui"))
+            // --- Option Double Trois.
+            GUI.TextField(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 20, 271, 36), "Activer la régle du double Trois ?");
+            if (GUI.Button(new Rect(Screen.width / 2 + 73, Screen.height / 2 + 60, 50, 36), "Oui"))
             {
-            
+                _isRegleDoubleTrois = true;
+            }       
+            if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 60, 50, 36), "Non"))
+            {
+                _isRegleDoubleTrois = false;
             }
-            if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 63, 50, 36), "Non"))
-            {
 
+            String RegleDoubleTrois = "";
+            if (this._isRegleDoubleTrois == true)
+                RegleDoubleTrois = "Double Trois : Activé.";
+            else
+                RegleDoubleTrois = "Double Trois : Déactivé.";
+            GUI.TextArea(new Rect(Screen.width / 2 - 90, Screen.height / 2 + 60, 150, 36), RegleDoubleTrois);
+            // --- Option Cinq Cassable.
+            GUI.TextField(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 110, 271, 36), "Activer la régle du cinq cassable ?");
+            if (GUI.Button(new Rect(Screen.width / 2 + 73, Screen.height / 2 + 151, 50, 36), "Oui"))
+            {
+                _isRegleCinqCasse = true;
+            }
+            if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 151, 50, 36), "Non"))
+            {
+                _isRegleCinqCasse = false;
+            }
+
+            String RegleCinqCassable = "";
+            if (this._isRegleCinqCasse == true)
+                RegleCinqCassable = "Cinq Cassable : Activé.";
+            else
+                RegleCinqCassable = "Cinq Cassable : Déactivé.";
+            GUI.TextArea(new Rect(Screen.width / 2 - 93, Screen.height / 2 + 151, 160, 36), RegleCinqCassable);
+            if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 200, 271, 36), "Return Game"))
+            {
+                _isFirstMenu = true;
+                _isOptionMenu = false;
+                _isChoixGame = false;
+            }
+        }
+    }
+
+    void OptionsGame()
+    {
+        if (this._isChoixGame)
+        {
+            if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 23, 271, 36), "Player 1"))
+            {
+            #pragma warning disable CS0618 // Le type ou le membre est obsolète
+                Application.LoadLevel("Level01"); // Avec Joueur.
+            #pragma warning restore CS0618 // Le type ou le membre est obsolète
+            }
+            if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 73, 271, 36), "Player 2"))
+            {
+            #pragma warning disable CS0618 // Le type ou le membre est obsolète
+                Application.LoadLevel("Level01"); // Avec AI.
+            #pragma warning restore CS0618 // Le type ou le membre est obsolète
             }
             if (GUI.Button(new Rect(Screen.width / 2 - 150, Screen.height / 2 + 123, 271, 36), "Return Game"))
             {
                 _isFirstMenu = true;
                 _isOptionMenu = false;
+                _isChoixGame = false;
             }
         }
     }
