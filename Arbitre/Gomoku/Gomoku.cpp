@@ -43,6 +43,11 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 	IA	*ia = new IA(cc, db, 'x', 'o');
 	if (iat == 0)
 		ia = new IA(cc, db, 'o', 'x');
+	if (ian == 2)
+	{
+		ia = new IA(cc, db, 'o', 'x');
+		IA	*ia2 = new IA(cc, db, 'x', 'o');
+	}
 
 	cap[0] = 0;
 	cap[1] = 0;
@@ -52,7 +57,7 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 		print_tab(tab);
 		val = 0;
 		std::cout << "> Joueur : " << t % 2 + 1 << std::endl;
-		if (ian == 0 || t % 2 != iat)
+		if (ian != 2 && (ian == 0 || t % 2 != iat))
 			while (val == 0)
 			{
 				std::cout << "> Position vertical : ";
@@ -81,8 +86,10 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 					print_tab(tab);
 				}
 			}
-		else if (ian == 1 && t % 2 == iat)
+		else if (ian >= 1 && t % 2 == iat)
 			tab = ia->Play(tab);
+		else if (ian == 2 && t % 2 != iat)
+			tab = ia2->Play(tab);
 		taken(&tab, (v - 1) * 19 + h - 1, &(cap[0]), &(cap[1]));
 	}
 	print_tab(tab);
