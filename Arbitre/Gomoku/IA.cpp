@@ -38,7 +38,6 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	IA::Chosen	Min = beta, tmp;
 	int		ev;
 
-	std::cout << "Min " << size << std::endl;
 	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
 	{
 		if ((*it).second == '-')
@@ -70,7 +69,6 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	IA::Chosen	Max = alpha, tmp;
 	int		ev;
 
-	std::cout << "Max " << size << std::endl;
 	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)		/* pour un nombre de case donné il va tester toutes les possibilité (actuellement toutes les cases) */
 	{
 		if ((*it).second == '-')
