@@ -23,7 +23,7 @@ int		NT(std::map<int,char> tab, int pos)
 	return 0;
 }
 
-char	check(std::map<int, char> tab, int cc)
+char	check(std::map<int, char> tab, int cc, int pos)
 {
 	int	end = 0;
 

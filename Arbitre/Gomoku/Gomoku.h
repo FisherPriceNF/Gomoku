@@ -11,6 +11,8 @@
 int		ia(std::map<int, char> *tab);
 int		double_trois(std::map<int, char> tab, int pos);
 void	taken(std::map<int, char> *tab, int pos, int *cap1, int *cap2);
-char	check(std::map<int, char> tab, int cc);
+char	check(std::map<int, char> tab, int cc, int pos);
+void	print_tab(std::map<int, char> tab);
+int		add_pos(std::map<int, char> *tab, char c, int v, int h);
 
 #endif

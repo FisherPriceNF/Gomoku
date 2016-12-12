@@ -38,7 +38,8 @@ int		add_pos(std::map<int, char> *tab, char c, int v, int h)
 
 void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 {
-	int	t = -1, h, v, val, pos, cap[2];
+	int	t = -1, h = 0, v = 0, val, pos, cap[2];
+	char	vic;
 	std::string in;
 	IA	*ia = new IA(cc, db, 'x', 'o'), *ia2;
 	if (iat == 0)
@@ -52,7 +53,7 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 	cap[0] = 0;
 	cap[1] = 0;
 
-	while (check(tab, cc) == 0 && ++t >= 0 && cap[0] < 10 && cap[1] < 10)
+	while ((vic = check(tab, cc, (v - 1) * 19 + h - 1)) == 0 && ++t >= 0 && cap[0] < 10 && cap[1] < 10)
 	{
 		print_tab(tab);
 		val = 0;
@@ -85,12 +86,16 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 					std::cout << "error" << std::endl;
 					print_tab(tab);
 				}
+				taken(&tab, (v - 1) * 19 + h - 1, &(cap[0]), &(cap[1]));
 			}
 		else if (ian >= 1 && t % 2 == iat)
-			tab = ia->Play(tab);
+			ia->Play(&tab, &(cap[0]), &(cap[1]));
 		else if (ian == 2 && t % 2 != iat)
-			tab = ia2->Play(tab);
-		taken(&tab, (v - 1) * 19 + h - 1, &(cap[0]), &(cap[1]));
+			ia2->Play(&tab, &(cap[0]), &(cap[1]));
+		std::cout << "return" << std::endl;
+		print_tab(tab);
+		std::cout << "return" << std::endl;
+		print_tab(tab);
 	}
 	print_tab(tab);
 	std::cout << "Winner is : ";
@@ -99,7 +104,7 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 	else if (cap[1] >= 10)
 		std::cout << "o" << std::endl;
 	else
-		std::cout << check(tab, cc) << std::endl;
+		std::cout << vic << std::endl;
 }
 
 std::map<int, char>	create()

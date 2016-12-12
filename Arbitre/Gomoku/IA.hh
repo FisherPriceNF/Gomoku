@@ -11,17 +11,17 @@ public:
 	IA(int, int, char, char);
 	~IA() {};
 
-	std::map<int, char> Play(std::map<int, char> tab);
+	void Play(std::map<int, char>*, int*, int*);
 	
 	struct Chosen
 	{
-		int	weight, p;
+		signed int	weight, p;
 	};
 
 private:
-	int		eval(std::map<int, char>, int);
-	Chosen	min(std::map<int, char>, int, int);
-	Chosen	max(std::map<int, char>, int, int);
+	int		eval(std::map<int, char>, int, int);
+	Chosen	min(std::map<int, char>, int, int, Chosen, Chosen);
+	Chosen	max(std::map<int, char>, int, int, Chosen, Chosen);
 	Chosen	newChosen(int, int);
 	Chosen	MinChosen();
 	Chosen	MaxChosen();
