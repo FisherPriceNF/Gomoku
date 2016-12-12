@@ -20,7 +20,7 @@ IA::Chosen	IA::newChosen(int _w, int _p) /* fonction d'initialisation */
 IA::Chosen	IA::MinChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
-	c.p = -1;
+	c.p = 200;
 	c.weight = 2147483647;
 	return (c);
 }
@@ -28,7 +28,7 @@ IA::Chosen	IA::MinChosen() /* fonction d'initialisation */
 IA::Chosen	IA::MaxChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
-	c.p = -1;
+	c.p = 200;
 	c.weight = -2147483647;
 	return (c);
 }
@@ -36,11 +36,20 @@ IA::Chosen	IA::MaxChosen() /* fonction d'initialisation */
 IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha, IA::Chosen beta) /* Cette fonction cherche le pire coup possible (joué par l'adversaire) */
 {
 	IA::Chosen	Min = beta, tmp;
-	int		ev;
+	int			ev;
 
 	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
 	{
-		if ((*it).second == '-')
+		std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
+		if ((*it).second == '-' &&
+			((tab[(*it).first - 1] != '-' && (*it).first % 19 > 0) ||
+			(tab[(*it).first + 1] != '-' && (*it).first % 19 < 18) ||
+			(tab[(*it).first - 19] != '-' && (*it).first / 19 > 0) ||	
+			(tab[(*it).first + 19] != '-' && (*it).first / 19 < 18) ||
+			(tab[(*it).first - 1 + 19] != '-' && (*it).first % 19 > 0 && (*it).first / 19 < 18) ||
+			(tab[(*it).first + 1 - 19] != '-' && (*it).first % 19 < 18 && (*it).first / 19 > 0) ||
+			(tab[(*it).first - 19 - 1] != '-' && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
+			(tab[(*it).first + 19 + 1] != '-' && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
 		{
 			(*it).second = this->e;
 			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
@@ -67,11 +76,20 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha, IA::Chosen beta)	/* Cette fonction cherche le meilleurs coup possible */
 {
 	IA::Chosen	Max = alpha, tmp;
-	int		ev;
+	int			ev;
 
 	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)		/* pour un nombre de case donné il va tester toutes les possibilité (actuellement toutes les cases) */
 	{
-		if ((*it).second == '-')
+		std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
+		if ((*it).second == '-' &&
+			((tab[(*it).first - 1] != '-' && (*it).first % 19 > 0) ||
+			(tab[(*it).first + 1] != '-' && (*it).first % 19 < 18) ||
+			(tab[(*it).first - 19] != '-' && (*it).first / 19 > 0) ||
+			(tab[(*it).first + 19] != '-' && (*it).first / 19 < 18) ||
+			(tab[(*it).first - 1 + 19] != '-' && (*it).first % 19 > 0 && (*it).first / 19 < 18) ||
+			(tab[(*it).first + 1 - 19] != '-' && (*it).first % 19 < 18 && (*it).first / 19 > 0) ||
+			(tab[(*it).first - 19 - 1] != '-' && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
+			(tab[(*it).first + 19 + 1] != '-' && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
 		{
 			(*it).second = this->c;
 			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
@@ -98,7 +116,7 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 int		IA::eval(std::map<int, char> tab, int size, int pos) /* cette fonction a pour but d'évaluer le coup qui vient d'être jouer un nombre positif indiquera un coup favorable et un nombre négatif un coup défavorable
 													J'ai mis de base 1000 - [nbr de coup] pour donné une valeur à la victoire ou à la défaite */
 {
-	char	r;
+	char	r = 0;
 	if ((r = check(tab, this->cc, pos)) == this->c)
 		return (1000 - size);
 	else if (r == this->e)
@@ -110,6 +128,7 @@ void IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lan
 {
 	IA::Chosen Cho = this->max(*tab, 0, 1, this->MaxChosen(), this->MinChosen());
 	std::cout << "I play" << std::endl << Cho.p << std::endl << Cho.weight << std::endl;
-	add_pos(tab, this->c, Cho.p / 19, Cho.p % 19);
+	std::cout << (*tab)[Cho.p] << std::endl;
+	(*tab)[Cho.p] = this->c;
 	taken(tab, Cho.p, cap0, cap1);
 }
