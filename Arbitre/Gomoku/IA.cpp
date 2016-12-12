@@ -57,9 +57,9 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 				}
 			}
 			(*it).second = '-';
+			if (Min.weight >= beta.weight)
+				break;
 		}
-		if (Min.weight >= beta.weight)
-			break;
 	}
 	return (Min);
 }
@@ -88,9 +88,9 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 				}
 			(*it).second = '-';
 			}
+			if (Max.weight <= alpha.weight)
+				break;
 		}
-		if (Max.weight <= alpha.weight)
-			break;
 	}
 	return (Max);
 }
@@ -109,7 +109,7 @@ int		IA::eval(std::map<int, char> tab, int size, int pos) /* cette fonction a po
 void IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lancement pas très importante */
 {
 	IA::Chosen Cho = this->max(*tab, 0, 1, this->MaxChosen(), this->MinChosen());
-	std::cout << Cho.p << std::endl << Cho.weight << std::endl;
+	std::cout << "I play" << std::endl << Cho.p << std::endl << Cho.weight << std::endl;
 	add_pos(tab, this->c, Cho.p / 19, Cho.p % 19);
 	taken(tab, Cho.p, cap0, cap1);
 }

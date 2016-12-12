@@ -38,7 +38,7 @@ int		add_pos(std::map<int, char> *tab, char c, int v, int h)
 
 void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 {
-	int	t = -1, h = 0, v = 0, val, pos, cap[2];
+	int	t = -1, h = 0, v = 0, val, pos = 0, cap[2];
 	char	vic;
 	std::string in;
 	IA	*ia = new IA(cc, db, 'x', 'o'), *ia2;
@@ -92,10 +92,6 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 			ia->Play(&tab, &(cap[0]), &(cap[1]));
 		else if (ian == 2 && t % 2 != iat)
 			ia2->Play(&tab, &(cap[0]), &(cap[1]));
-		std::cout << "return" << std::endl;
-		print_tab(tab);
-		std::cout << "return" << std::endl;
-		print_tab(tab);
 	}
 	print_tab(tab);
 	std::cout << "Winner is : ";
@@ -124,7 +120,15 @@ int main()
 	std::cin >> tmp;
 	if (tmp == "Non" || tmp == "non" || tmp == "NON")
 		db = 0;
-	if (tmp != "all")
+	else if (tmp == "alln")
+	{
+		db = 0;
+		cc = 0;
+		ia = 1;
+	}
+	else if (tmp == "allp")
+		iat = 1;
+	else if (tmp != "all")
 	{
 		std::cout << "Activer la regle du cinq cassable ? (Oui / Non)" << std::endl;
 		std::cin >> tmp;
