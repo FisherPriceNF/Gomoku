@@ -33,7 +33,7 @@ IA::Chosen	IA::MaxChosen() /* fonction d'initialisation */
 	return (c);
 }
 
-IA::Chosen	IA::min(std::map<int, char> tab, int size) /* Cette fonction cherche le pire coup possible (joué par l'adversaire) */
+IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof) /* Cette fonction cherche le pire coup possible (joué par l'adversaire) */
 {
 	IA::Chosen	Min = this->MinChosen(), tmp;
 	int		ev;
@@ -46,9 +46,9 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size) /* Cette fonction cherche 
 				(*it).second = this->e;
 				if ((ev = eval(tab, size)) != 0)
 					return (this->newChosen(ev, (*it).first));
-				else
+				else if (prof > size)
 				{
-					tmp = this->max(tab, size + 1);
+					tmp = this->max(tab, size + 1, prof);
 					if (tmp.weight < Min.weight)
 						Min = tmp;
 					(*it).second = '-';
@@ -57,7 +57,7 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size) /* Cette fonction cherche 
 	return (Min);
 }
 
-IA::Chosen	IA::max(std::map<int, char> tab, int size)	/* Cette fonction cherche le meilleurs coup possible */
+IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof)	/* Cette fonction cherche le meilleurs coup possible */
 {
 	IA::Chosen	Max = this->MaxChosen(), tmp;
 	int		ev;
@@ -71,9 +71,9 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size)	/* Cette fonction cherche 
 				if ((ev = eval(tab, size)) != 0)									/* si eval est égale à 0 ça signifie que le coup jouer n'est pas déterminant 
 																					Cette fonction sera à améliorer avec l'évolution de la fonction eval*/
 					return (this->newChosen(ev, (*it).first));
-				else
+				else if (prof > size)
 				{
-					tmp = this->min(tab, size + 1);
+					tmp = this->min(tab, size + 1, prof);
 					if (tmp.weight > Max.weight)
 						Max = tmp;
 					(*it).second = '-';
@@ -96,7 +96,7 @@ int		IA::eval(std::map<int, char> tab, int size) /* cette fonction a pour but d'
 
 std::map<int, char> IA::Play(std::map<int, char> tab) /* fonction de lancement pas très importante */
 {
-	IA::Chosen Cho = this->max(tab, 0);
+	IA::Chosen Cho = this->max(tab, 0, 1);
 	tab[Cho.p] = this->c;
 	return (tab);
 }

@@ -20,8 +20,8 @@ public:
 
 private:
 	int		eval(std::map<int, char>, int);
-	Chosen	min(std::map<int, char>, int);
-	Chosen	max(std::map<int, char>, int);
+	Chosen	min(std::map<int, char>, int, int);
+	Chosen	max(std::map<int, char>, int, int);
 	Chosen	newChosen(int, int);
 	Chosen	MinChosen();
 	Chosen	MaxChosen();

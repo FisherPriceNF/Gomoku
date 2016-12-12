@@ -40,13 +40,13 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 {
 	int	t = -1, h, v, val, pos, cap[2];
 	std::string in;
-	IA	*ia = new IA(cc, db, 'x', 'o');
+	IA	*ia = new IA(cc, db, 'x', 'o'), *ia2;
 	if (iat == 0)
 		ia = new IA(cc, db, 'o', 'x');
 	if (ian == 2)
 	{
 		ia = new IA(cc, db, 'o', 'x');
-		IA	*ia2 = new IA(cc, db, 'x', 'o');
+		ia2 = new IA(cc, db, 'x', 'o');
 	}
 
 	cap[0] = 0;
@@ -137,7 +137,6 @@ int main()
 				iat = 1;
 		}
 	}
-	std::cout << cc << db << ia << iat << std::endl;
 	std::map<int, char>	tab = create();
 	loop(tab, db, cc, ia, iat);
 	return 0;
