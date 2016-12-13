@@ -114,20 +114,29 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 }
 
 int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a pour but d'évaluer le coup qui vient d'être jouer un nombre positif indiquera un coup favorable et un nombre négatif un coup défavorable
-													J'ai mis de base 1000 - [nbr de coup] pour donné une valeur à la victoire ou à la défaite */
+									 J'ai mis de base 1000 - [nbr de coup] pour donné une valeur à la victoire ou à la défaite */
 {
-	char	r = 0;
-	int		a = 0, b = 0;
-	if ((r = check(*tab, this->cc, pos)) == this->c)
-		return (1000 - size);
-	else if (r == this->e)
-		return (-1000 + size);
-	r = taken(tab, pos, &a, &b);
-	if ((*tab)[pos] == this->c && r > 0)
-	  return (r * 100 - size);
-	else if (r > 0)
-	  return (-(r * 100 - size));
-	return (0);
+  char	r = 0;
+  int		a = 0, b = 0;
+  if ((r = check(*tab, this->cc, pos)) == this->c)
+    return (1000 - size);
+  else if (r == this->e)
+    return (-1000 + size);
+  r = taken(tab, pos, &a, &b);
+  if ((*tab)[pos] == this->c && r > 0)
+    return (r * 100 - size);
+  else if (r > 0)
+    return (-(r * 100 - size));
+  if(((tab[(*it).first - 1] == this->c && (*it).first % 19 > 0) ||
+      (tab[(*it).first + 1] == this->c && (*it).first % 19 < 18) ||
+      (tab[(*it).first - 19] == this->c && (*it).first / 19 > 0) ||	
+      (tab[(*it).first + 19] == this->c && (*it).first / 19 < 18) ||
+      (tab[(*it).first - 1 + 19] == this->c && (*it).first % 19 > 0 && (*it).first / 19 < 18) ||
+      (tab[(*it).first + 1 - 19] == this->c && (*it).first % 19 < 18 && (*it).first / 19 > 0) ||
+      (tab[(*it).first - 19 - 1] == this->c && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
+      (tab[(*it).first + 19 + 1] == this->c && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
+    return (10);
+  return (0);
 }
 
 void IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lancement pas très importante */
