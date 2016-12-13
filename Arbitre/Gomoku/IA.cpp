@@ -119,15 +119,14 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
 	char	r = 0;
 	int		a = 0, b = 0;
 	if ((r = check(*tab, this->cc, pos)) == this->c)
-		return (1000 - size);
+		return (10000 - size);
 	else if (r == this->e)
-		return (-1000 + size);
+		return (-10000 + size);
 	r = taken(tab, pos, &a, &b);
 	if ((*tab)[pos] == this->c && r > 0)
 	  return (r * 100 - size);
 	else if (r > 0)
 	  return (-(r * 100 - size));
-	return (0);
 	if ((((*tab)[pos - 1] == this->c && pos % 19 > 0) ||
 		((*tab)[pos + 1] == this->c && pos % 19 < 18) ||
 		((*tab)[pos - 19] == this->c && pos / 19 > 0) ||
@@ -164,8 +163,8 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
 		((*tab)[pos + 1 - 19] == this->e && pos % 19 < 16 && pos / 19 > 2 && (*tab)[pos + 2 - 2 * 19] == this->e && (*tab)[pos + 3 - 3 * 19] == '-' && (*tab)[pos - 1 + 19] == '-') ||
 		((*tab)[pos - 19 - 1] == this->e && pos % 19 > 2 && pos / 19 > 2 && (*tab)[pos - 2 * 19 - 2] == this->e && (*tab)[pos - 3 * 19 - 3] == '-' && (*tab)[pos + 19 + 1] == '-') ||
 		((*tab)[pos + 19 + 1] == this->e && pos % 19 < 16 && pos / 19 < 16 && (*tab)[pos + 2 * 19 + 2] == this->e && (*tab)[pos + 3 * 19 + 3] == '-' && (*tab)[pos - 19 - 1] == '-')))
-		return (30 - size);
-
+		return (1000 - size);
+	return (0);
 }
 
 void IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lancement pas très importante */
