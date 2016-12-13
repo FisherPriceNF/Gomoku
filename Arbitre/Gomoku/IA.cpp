@@ -61,7 +61,7 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 				if (prof > size)
 				{
 					tmp = this->max(tab, size + 1, prof, alpha, Min);
-					if (tmp.weight < Min.weight)
+					if (-tmp.weight < Min.weight)
 						Min = tmp;
 				}
 			}
@@ -100,9 +100,9 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 					Max = tmp;
 				if (prof > size)
 				{
-					tmp = this->min(tab, size + 1, prof, Max, beta);
-					if (tmp.weight > Max.weight)
-						Max = tmp;
+				  tmp = this->min(tab, size + 1, prof, Max, beta);
+				  if (-tmp.weight > Max.weight)
+				    Max = tmp;
 				}
 			(*it).second = '-';
 			}
@@ -121,6 +121,11 @@ int		IA::eval(std::map<int, char> tab, int size, int pos) /* cette fonction a po
 		return (1000 - size);
 	else if (r == this->e)
 		return (-1000 + size);
+	r = taken(tab, this->cc, pos);
+	if (tab[pos] == this->c && r > 0)
+	  return (r * 100 - size);
+	else if (r > 0)
+	  return (-(r * 100 - size));
 	return (0);
 }
 
