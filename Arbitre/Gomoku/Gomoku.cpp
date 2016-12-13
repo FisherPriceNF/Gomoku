@@ -128,6 +128,8 @@ int main()
 	}
 	else if (tmp == "allp")
 		iat = 1;
+	else if (tmp == "alls")
+		ia = 0;
 	else if (tmp != "all")
 	{
 		std::cout << "Activer la regle du cinq cassable ? (Oui / Non)" << std::endl;
