@@ -40,7 +40,6 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 
   for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
     {
-      std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
       if ((*it).second == '-' &&
 	  ((tab[(*it).first - 1] != '-' && (*it).first % 19 > 0) ||
 	   (tab[(*it).first + 1] != '-' && (*it).first % 19 < 18) ||
@@ -51,6 +50,7 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	   (tab[(*it).first - 19 - 1] != '-' && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
 	   (tab[(*it).first + 19 + 1] != '-' && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
 	{
+	  std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
 	  (*it).second = this->e;
 	  if (double_trois(tab, (*it).first) == 0 || this->db == 0)
 	    {
@@ -80,7 +80,6 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 
   for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)		/* pour un nombre de case donné il va tester toutes les possibilité (actuellement toutes les cases) */
     {
-      std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
       if ((*it).second == '-' &&
 	  ((tab[(*it).first - 1] != '-' && (*it).first % 19 > 0) ||
 	   (tab[(*it).first + 1] != '-' && (*it).first % 19 < 18) ||
@@ -91,6 +90,7 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	   (tab[(*it).first - 19 - 1] != '-' && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
 	   (tab[(*it).first + 19 + 1] != '-' && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
 	{
+	  std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
 	  (*it).second = this->c;
 	  if (double_trois(tab, (*it).first) == 0 || this->db == 0)
 	    {
@@ -127,14 +127,14 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
     return (r * 100 - size);
   else if (r > 0)
     return (-(r * 100 - size));
-  if(((tab[(*it).first - 1] == this->c && (*it).first % 19 > 0) ||
+  if ((tab[(*it).first - 1] == this->c && (*it).first % 19 > 0) ||
       (tab[(*it).first + 1] == this->c && (*it).first % 19 < 18) ||
       (tab[(*it).first - 19] == this->c && (*it).first / 19 > 0) ||	
       (tab[(*it).first + 19] == this->c && (*it).first / 19 < 18) ||
       (tab[(*it).first - 1 + 19] == this->c && (*it).first % 19 > 0 && (*it).first / 19 < 18) ||
       (tab[(*it).first + 1 - 19] == this->c && (*it).first % 19 < 18 && (*it).first / 19 > 0) ||
       (tab[(*it).first - 19 - 1] == this->c && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
-      (tab[(*it).first + 19 + 1] == this->c && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
+      (tab[(*it).first + 19 + 1] == this->c && (*it).first % 19 < 18 && (*it).first / 19 < 18))
     return (10);
   return (0);
 }
