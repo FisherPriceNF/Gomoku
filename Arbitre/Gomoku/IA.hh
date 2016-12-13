@@ -19,7 +19,7 @@ public:
 	};
 
 private:
-	int		eval(std::map<int, char>, int, int);
+	int		eval(std::map<int, char>*, int, int);
 	Chosen	min(std::map<int, char>, int, int, Chosen, Chosen);
 	Chosen	max(std::map<int, char>, int, int, Chosen, Chosen);
 	Chosen	newChosen(int, int);

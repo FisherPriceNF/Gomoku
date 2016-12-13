@@ -54,7 +54,7 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	  (*it).second = this->e;
 	  if (double_trois(tab, (*it).first) == 0 || this->db == 0)
 	    {
-	      ev = eval(tab, size, (*it).first);
+	      ev = eval(&tab, size, (*it).first);
 	      tmp = this->newChosen(ev, (*it).first);
 	      if (tmp.weight < Min.weight)
 		Min = tmp;
@@ -66,7 +66,7 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 		}
 	    }
 	  (*it).second = '-';
-	  if (Min.weight >= beta.weight || Max.weight < -50)
+	  if (Min.weight >= beta.weight || Min.weight < -50)
 	    break;
 	}
     }
@@ -94,7 +94,7 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	  (*it).second = this->c;
 	  if (double_trois(tab, (*it).first) == 0 || this->db == 0)
 	    {
-	      ev = eval(tab, size, (*it).first);
+	      ev = eval(&tab, size, (*it).first);
 	      tmp = this->newChosen(ev, (*it).first);
 	      if (tmp.weight > Max.weight)
 		Max = tmp;
@@ -113,16 +113,17 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
   return (Max);
 }
 
-int		IA::eval(std::map<int, char> tab, int size, int pos) /* cette fonction a pour but d'évaluer le coup qui vient d'être jouer un nombre positif indiquera un coup favorable et un nombre négatif un coup défavorable
+int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a pour but d'évaluer le coup qui vient d'être jouer un nombre positif indiquera un coup favorable et un nombre négatif un coup défavorable
 													J'ai mis de base 1000 - [nbr de coup] pour donné une valeur à la victoire ou à la défaite */
 {
 	char	r = 0;
-	if ((r = check(tab, this->cc, pos)) == this->c)
+	int		a = 0, b = 0;
+	if ((r = check(*tab, this->cc, pos)) == this->c)
 		return (1000 - size);
 	else if (r == this->e)
 		return (-1000 + size);
-	r = taken(tab, this->cc, pos);
-	if (tab[pos] == this->c && r > 0)
+	r = taken(tab, pos, &a, &b);
+	if ((*tab)[pos] == this->c && r > 0)
 	  return (r * 100 - size);
 	else if (r > 0)
 	  return (-(r * 100 - size));
