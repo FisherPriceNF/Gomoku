@@ -20,7 +20,7 @@ IA::Chosen	IA::newChosen(int _w, int _p) /* fonction d'initialisation */
 IA::Chosen	IA::MinChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
-	c.p = 200;
+	c.p = 180;
 	c.weight = 2147483647;
 	return (c);
 }
@@ -28,7 +28,7 @@ IA::Chosen	IA::MinChosen() /* fonction d'initialisation */
 IA::Chosen	IA::MaxChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
-	c.p = 200;
+	c.p = 180;
 	c.weight = -2147483647;
 	return (c);
 }
@@ -40,7 +40,6 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 
   for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
     {
-      std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
       if ((*it).second == '-' &&
 	  ((tab[(*it).first - 1] != '-' && (*it).first % 19 > 0) ||
 	   (tab[(*it).first + 1] != '-' && (*it).first % 19 < 18) ||
@@ -51,7 +50,8 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	   (tab[(*it).first - 19 - 1] != '-' && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
 	   (tab[(*it).first + 19 + 1] != '-' && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
 	{
-	  (*it).second = this->e;
+//		std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
+		(*it).second = this->e;
 	  if (double_trois(tab, (*it).first) == 0 || this->db == 0)
 	    {
 	      ev = eval(&tab, size, (*it).first);
@@ -80,7 +80,6 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 
   for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)		/* pour un nombre de case donné il va tester toutes les possibilité (actuellement toutes les cases) */
     {
-      std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
       if ((*it).second == '-' &&
 	  ((tab[(*it).first - 1] != '-' && (*it).first % 19 > 0) ||
 	   (tab[(*it).first + 1] != '-' && (*it).first % 19 < 18) ||
@@ -91,7 +90,8 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	   (tab[(*it).first - 19 - 1] != '-' && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
 	   (tab[(*it).first + 19 + 1] != '-' && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
 	{
-	  (*it).second = this->c;
+	//	std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
+		(*it).second = this->c;
 	  if (double_trois(tab, (*it).first) == 0 || this->db == 0)
 	    {
 	      ev = eval(&tab, size, (*it).first);
@@ -127,23 +127,56 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
     return (r * 100 - size);
   else if (r > 0)
     return (-(r * 100 - size));
-  if(((tab[(*it).first - 1] == this->c && (*it).first % 19 > 0) ||
-      (tab[(*it).first + 1] == this->c && (*it).first % 19 < 18) ||
-      (tab[(*it).first - 19] == this->c && (*it).first / 19 > 0) ||	
-      (tab[(*it).first + 19] == this->c && (*it).first / 19 < 18) ||
-      (tab[(*it).first - 1 + 19] == this->c && (*it).first % 19 > 0 && (*it).first / 19 < 18) ||
-      (tab[(*it).first + 1 - 19] == this->c && (*it).first % 19 < 18 && (*it).first / 19 > 0) ||
-      (tab[(*it).first - 19 - 1] == this->c && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
-      (tab[(*it).first + 19 + 1] == this->c && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
-    return (10);
+  if ((((*tab)[pos - 1] == this->c && pos % 19 > 0) ||
+      ((*tab)[pos + 1] == this->c && pos % 19 < 18) ||
+      ((*tab)[pos - 19] == this->c && pos / 19 > 0) ||	
+      ((*tab)[pos + 19] == this->c && pos / 19 < 18) ||
+      ((*tab)[pos - 1 + 19] == this->c && pos % 19 > 0 && pos / 19 < 18) ||
+      ((*tab)[pos + 1 - 19] == this->c && pos % 19 < 18 && pos / 19 > 0) ||
+      ((*tab)[pos - 19 - 1] == this->c && pos % 19 > 0 && pos / 19 > 0) ||
+      ((*tab)[pos + 19 + 1] == this->c && pos % 19 < 18 && pos / 19 < 18)))
+    return (10 - size);
+  if ((((*tab)[pos - 1] == this->c && pos % 19 > 1 && (*tab)[pos - 2] == this->c) ||
+	  ((*tab)[pos + 1] == this->c && pos % 19 < 17 && (*tab)[pos + 2] == this->c) ||
+	  ((*tab)[pos - 19] == this->c && pos / 19 > 1 && (*tab)[pos - 2 * 19] == this->c) ||
+	  ((*tab)[pos + 19] == this->c && pos / 19 < 17 && (*tab)[pos + 2 * 19] == this->c) ||
+	  ((*tab)[pos - 1 + 19] == this->c && pos % 19 > 1 && pos / 19 < 17 && (*tab)[pos - 2 + 2 * 19] == this->c) ||
+	  ((*tab)[pos + 1 - 19] == this->c && pos % 19 < 17 && pos / 19 > 1 && (*tab)[pos + 2 - 2 * 19] == this->c) ||
+	  ((*tab)[pos - 19 - 1] == this->c && pos % 19 > 1 && pos / 19 > 1 && (*tab)[pos - 2 * 19 - 2] == this->c) ||
+	  ((*tab)[pos + 19 + 1] == this->c && pos % 19 < 17 && pos / 19 < 17 && (*tab)[pos + 2 * 19 + 2] == this->c)))
+	  return (20 - size);
+  if ((((*tab)[pos - 1] == this->c && pos % 19 > 2 && (*tab)[pos - 2] == this->c && (*tab)[pos - 3] == this->c) ||
+	  ((*tab)[pos + 1] == this->c && pos % 19 < 16 && (*tab)[pos + 2] == this->c && (*tab)[pos + 3] == this->c) ||
+	  ((*tab)[pos - 19] == this->c && pos / 19 > 2 && (*tab)[pos - 2 * 19] == this->c && (*tab)[pos - 3 * 19] == this->c) ||
+	  ((*tab)[pos + 19] == this->c && pos / 19 < 16 && (*tab)[pos + 2 * 19] == this->c && (*tab)[pos + 3 * 19] == this->c) ||
+	  ((*tab)[pos - 1 + 19] == this->c && pos % 19 > 2 && pos / 19 < 16 && (*tab)[pos - 2 + 2 * 19] == this->c && (*tab)[pos - 3 + 3 * 19] == this->c) ||
+	  ((*tab)[pos + 1 - 19] == this->c && pos % 19 < 16 && pos / 19 > 2 && (*tab)[pos + 2 - 2 * 19] == this->c && (*tab)[pos + 3 - 3 * 19] == this->c) ||
+	  ((*tab)[pos - 19 - 1] == this->c && pos % 19 > 2 && pos / 19 > 2 && (*tab)[pos - 2 * 19 - 2] == this->c && (*tab)[pos - 3 * 19 - 3] == this->c) ||
+	  ((*tab)[pos + 19 + 1] == this->c && pos % 19 < 16 && pos / 19 < 16 && (*tab)[pos + 2 * 19 + 2] == this->c && (*tab)[pos + 3 * 19 + 3] == this->c)))
+	  return (30 - size);
+
+  if ((((*tab)[pos - 1] == this->e && pos % 19 > 2 && (*tab)[pos - 2] == this->e && (*tab)[pos - 3] == '-' && (*tab)[pos + 1] == '-') ||
+	  ((*tab)[pos + 1] == this->e && pos % 19 < 16 && (*tab)[pos + 2] == this->e && (*tab)[pos + 3] == '-' && (*tab)[pos - 1] == '-') ||
+	  ((*tab)[pos - 19] == this->e && pos / 19 > 2 && (*tab)[pos - 2 * 19] == this->e && (*tab)[pos - 3 * 19] == '-' && (*tab)[pos + 19] == '-') ||
+	  ((*tab)[pos + 19] == this->e && pos / 19 < 16 && (*tab)[pos + 2 * 19] == this->e && (*tab)[pos + 3 * 19] == '-' && (*tab)[pos - 19] == '-') ||
+	  ((*tab)[pos - 1 + 19] == this->e && pos % 19 > 2 && pos / 19 < 16 && (*tab)[pos - 2 + 2 * 19] == this->e && (*tab)[pos - 3 + 3 * 19] == '-' && (*tab)[pos + 1 - 19] == '-') ||
+	  ((*tab)[pos + 1 - 19] == this->e && pos % 19 < 16 && pos / 19 > 2 && (*tab)[pos + 2 - 2 * 19] == this->e && (*tab)[pos + 3 - 3 * 19] == '-' && (*tab)[pos - 1 + 19] == '-') ||
+	  ((*tab)[pos - 19 - 1] == this->e && pos % 19 > 2 && pos / 19 > 2 && (*tab)[pos - 2 * 19 - 2] == this->e && (*tab)[pos - 3 * 19 - 3] == '-' && (*tab)[pos + 19 + 1] == '-') ||
+	  ((*tab)[pos + 19 + 1] == this->e && pos % 19 < 16 && pos / 19 < 16 && (*tab)[pos + 2 * 19 + 2] == this->e && (*tab)[pos + 3 * 19 + 3] == '-' && (*tab)[pos - 19 - 1] == '-')))
+	  return (30 - size);
+
   return (0);
 }
 
 void IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lancement pas très importante */
 {
+	for (std::map<int, char>::iterator it = (*tab).begin(); it != (*tab).end(); it++)
+		std::cout << (*it).first << std::endl;
 	IA::Chosen Cho = this->max(*tab, 0, 1, this->MaxChosen(), this->MinChosen());
 	std::cout << "I play" << std::endl << Cho.p << std::endl << Cho.weight << std::endl;
 	std::cout << (*tab)[Cho.p] << std::endl;
 	(*tab)[Cho.p] = this->c;
 	taken(tab, Cho.p, cap0, cap1);
+	for (std::map<int, char>::iterator it = (*tab).begin(); it != (*tab).end(); it++)
+		std::cout << (*it).first << std::endl;
 }

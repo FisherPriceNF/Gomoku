@@ -25,6 +25,7 @@ int		NT(std::map<int, char> tab, int pos)
 
 char	check(std::map<int, char> tab, int cc, int pos)
 {
+	if (tab[pos] != '-')
 	if (cc == 1)
 	{
 		if ((pos % 19 < 15 && tab[pos + 1] == tab[pos] && tab[pos + 2] == tab[pos] && tab[pos + 3] == tab[pos] && tab[pos + 4] == tab[pos] &&
