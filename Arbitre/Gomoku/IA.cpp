@@ -35,82 +35,82 @@ IA::Chosen	IA::MaxChosen() /* fonction d'initialisation */
 
 IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha, IA::Chosen beta) /* Cette fonction cherche le pire coup possible (joué par l'adversaire) */
 {
-	IA::Chosen	Min = beta, tmp;
-	int			ev;
+  IA::Chosen	Min = beta, tmp;
+  int			ev;
 
-	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
+  for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
+    {
+      std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
+      if ((*it).second == '-' &&
+	  ((tab[(*it).first - 1] != '-' && (*it).first % 19 > 0) ||
+	   (tab[(*it).first + 1] != '-' && (*it).first % 19 < 18) ||
+	   (tab[(*it).first - 19] != '-' && (*it).first / 19 > 0) ||	
+	   (tab[(*it).first + 19] != '-' && (*it).first / 19 < 18) ||
+	   (tab[(*it).first - 1 + 19] != '-' && (*it).first % 19 > 0 && (*it).first / 19 < 18) ||
+	   (tab[(*it).first + 1 - 19] != '-' && (*it).first % 19 < 18 && (*it).first / 19 > 0) ||
+	   (tab[(*it).first - 19 - 1] != '-' && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
+	   (tab[(*it).first + 19 + 1] != '-' && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
 	{
-		std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
-		if ((*it).second == '-' &&
-			((tab[(*it).first - 1] != '-' && (*it).first % 19 > 0) ||
-			(tab[(*it).first + 1] != '-' && (*it).first % 19 < 18) ||
-			(tab[(*it).first - 19] != '-' && (*it).first / 19 > 0) ||	
-			(tab[(*it).first + 19] != '-' && (*it).first / 19 < 18) ||
-			(tab[(*it).first - 1 + 19] != '-' && (*it).first % 19 > 0 && (*it).first / 19 < 18) ||
-			(tab[(*it).first + 1 - 19] != '-' && (*it).first % 19 < 18 && (*it).first / 19 > 0) ||
-			(tab[(*it).first - 19 - 1] != '-' && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
-			(tab[(*it).first + 19 + 1] != '-' && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
+	  (*it).second = this->e;
+	  if (double_trois(tab, (*it).first) == 0 || this->db == 0)
+	    {
+	      ev = eval(tab, size, (*it).first);
+	      tmp = this->newChosen(ev, (*it).first);
+	      if (tmp.weight < Min.weight)
+		Min = tmp;
+	      if (prof > size)
 		{
-			(*it).second = this->e;
-			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
-			{
-				ev = eval(tab, size, (*it).first);
-				tmp = this->newChosen(ev, (*it).first);
-				if (tmp.weight < Min.weight)
-					Min = tmp;
-				if (prof > size)
-				{
-					tmp = this->max(tab, size + 1, prof, alpha, Min);
-					if (-tmp.weight < Min.weight)
-						Min = tmp;
-				}
-			}
-			(*it).second = '-';
-			if (Min.weight >= beta.weight)
-				break;
+		  tmp = this->max(tab, size + 1, prof, alpha, Min);
+		  if (-tmp.weight < Min.weight)
+		    Min = tmp;
 		}
+	    }
+	  (*it).second = '-';
+	  if (Min.weight >= beta.weight || Max.weight < -50)
+	    break;
 	}
-	return (Min);
+    }
+  return (Min);
 }
 
 IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha, IA::Chosen beta)	/* Cette fonction cherche le meilleurs coup possible */
 {
-	IA::Chosen	Max = alpha, tmp;
-	int			ev;
+  IA::Chosen	Max = alpha, tmp;
+  int			ev;
 
-	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)		/* pour un nombre de case donné il va tester toutes les possibilité (actuellement toutes les cases) */
+  for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)		/* pour un nombre de case donné il va tester toutes les possibilité (actuellement toutes les cases) */
+    {
+      std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
+      if ((*it).second == '-' &&
+	  ((tab[(*it).first - 1] != '-' && (*it).first % 19 > 0) ||
+	   (tab[(*it).first + 1] != '-' && (*it).first % 19 < 18) ||
+	   (tab[(*it).first - 19] != '-' && (*it).first / 19 > 0) ||
+	   (tab[(*it).first + 19] != '-' && (*it).first / 19 < 18) ||
+	   (tab[(*it).first - 1 + 19] != '-' && (*it).first % 19 > 0 && (*it).first / 19 < 18) ||
+	   (tab[(*it).first + 1 - 19] != '-' && (*it).first % 19 < 18 && (*it).first / 19 > 0) ||
+	   (tab[(*it).first - 19 - 1] != '-' && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
+	   (tab[(*it).first + 19 + 1] != '-' && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
 	{
-		std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
-		if ((*it).second == '-' &&
-			((tab[(*it).first - 1] != '-' && (*it).first % 19 > 0) ||
-			(tab[(*it).first + 1] != '-' && (*it).first % 19 < 18) ||
-			(tab[(*it).first - 19] != '-' && (*it).first / 19 > 0) ||
-			(tab[(*it).first + 19] != '-' && (*it).first / 19 < 18) ||
-			(tab[(*it).first - 1 + 19] != '-' && (*it).first % 19 > 0 && (*it).first / 19 < 18) ||
-			(tab[(*it).first + 1 - 19] != '-' && (*it).first % 19 < 18 && (*it).first / 19 > 0) ||
-			(tab[(*it).first - 19 - 1] != '-' && (*it).first % 19 > 0 && (*it).first / 19 > 0) ||
-			(tab[(*it).first + 19 + 1] != '-' && (*it).first % 19 < 18 && (*it).first / 19 < 18)))
+	  (*it).second = this->c;
+	  if (double_trois(tab, (*it).first) == 0 || this->db == 0)
+	    {
+	      ev = eval(tab, size, (*it).first);
+	      tmp = this->newChosen(ev, (*it).first);
+	      if (tmp.weight > Max.weight)
+		Max = tmp;
+	      if (prof > size)
 		{
-			(*it).second = this->c;
-			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
-			{
-				ev = eval(tab, size, (*it).first);
-				tmp = this->newChosen(ev, (*it).first);
-				if (tmp.weight > Max.weight)
-					Max = tmp;
-				if (prof > size)
-				{
-				  tmp = this->min(tab, size + 1, prof, Max, beta);
-				  if (-tmp.weight > Max.weight)
-				    Max = tmp;
-				}
-			(*it).second = '-';
-			}
-			if (Max.weight <= alpha.weight)
-				break;
+		  tmp = this->min(tab, size + 1, prof, Max, beta);
+		  if (-tmp.weight > Max.weight)
+		    Max = tmp;
 		}
+	      (*it).second = '-';
+	    }
+	  if (Max.weight <= alpha.weight || Max.weight > 50)
+	    break;
 	}
-	return (Max);
+    }
+  return (Max);
 }
 
 int		IA::eval(std::map<int, char> tab, int size, int pos) /* cette fonction a pour but d'évaluer le coup qui vient d'être jouer un nombre positif indiquera un coup favorable et un nombre négatif un coup défavorable
