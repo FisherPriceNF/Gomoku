@@ -66,7 +66,7 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 				}
 			}
 			(*it).second = '-';
-			if (Min.weight >= beta.weight || Min.weight < -50)
+			if (Min.weight >= beta.weight)
 				break;
 		}
 	}
@@ -106,7 +106,7 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 				}
 				(*it).second = '-';
 			}
-			if (Max.weight <= alpha.weight || Max.weight > 50)
+			if (Max.weight <= alpha.weight)
 				break;
 		}
 	}
