@@ -8,9 +8,8 @@ void	print_tab(std::map<int, char> tab)
 
 	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
 	{
-		i++;
 		std::cout << it->second;
-		if (i % 19 == 0)
+		if (++i % 19 == 0)
 			std::cout << std::endl;
 	}
 	std::cout << std::endl;
@@ -55,6 +54,7 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 
 	while ((vic = check(tab, cc, (v - 1) * 19 + h - 1)) == 0 && ++t >= 0 && cap[0] < 10 && cap[1] < 10)
 	{
+		std::cout << "victoire : " << check(tab, cc, (v - 1) * 19 + h - 1) << std::endl;
 		print_tab(tab);
 		val = 0;
 		std::cout << "> Joueur : " << t % 2 + 1 << std::endl;
@@ -65,7 +65,7 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 				std::cin >> in;
 				if (in == "quit")
 					return;
-				v = stoi(in);
+				v = stoi(in);	
 				std::cout << "> Position horizontal : ";
 				std::cin >> in;
 				if (in == "quit")
