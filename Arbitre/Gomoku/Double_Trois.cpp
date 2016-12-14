@@ -8,7 +8,7 @@ int		alligne_trois(std::map<int, char> tab, int pos, int *pos2, int *pos3)
 
 	if (tab[pos] == 'x')
 		e = 'o';
-	else (tab[pos] == 'o')
+	else
 		e = 'x';
 	if (pos % 19 < 16 && pos % 19 > 0 && 
 		tab[pos] == tab[pos + 1] && tab[pos] == tab[pos + 2] &&
