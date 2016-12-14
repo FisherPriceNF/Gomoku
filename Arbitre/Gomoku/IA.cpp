@@ -21,7 +21,7 @@ IA::Chosen	IA::MinChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
 	c.p = 180;
-	c.weight = 2147483647;
+	c.weight = 99;
 	return (c);
 }
 
@@ -29,7 +29,7 @@ IA::Chosen	IA::MaxChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
 	c.p = 180;
-	c.weight = -2147483647;
+	c.weight = -99;
 	return (c);
 }
 
@@ -167,7 +167,7 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
 
 void IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lancement pas très importante */
 {
-	IA::Chosen Cho = this->max(*tab, 0, 1, this->MaxChosen(), this->MinChosen());
+	IA::Chosen Cho = this->max(*tab, 0, 3, this->MaxChosen(), this->MinChosen());
 	(*tab)[Cho.p] = this->c;
 	taken(tab, Cho.p, cap0, cap1);
 }
