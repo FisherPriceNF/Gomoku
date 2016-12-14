@@ -82,7 +82,7 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 				{
 					tmp = this->max(tab, size + 1, prof, alpha, Min);
 					if (-tmp.weight < Min.weight)
-						return (tmp);
+						Min = tmp;
 				}
 			}
 			(*it).second = '-';
@@ -119,7 +119,7 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 				{
 					tmp = this->min(tab, size + 1, prof, Max, beta);
 					if (-tmp.weight > Max.weight)
-						return (tmp);
+						Max = tmp;
 				}
 				(*it).second = '-';
 			}
