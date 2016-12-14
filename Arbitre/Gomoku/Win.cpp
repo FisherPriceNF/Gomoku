@@ -3,39 +3,22 @@
 
 int		NT(std::map<int, char> tab, int pos)
 {
-	int	t = 0;
-
-	if (pos % 19 < 17 && pos % 19 > 0 &&
-		(tab)[pos] == (tab)[pos + 1] && (tab)[pos - 1] != (tab)[pos] &&
-		(tab)[pos + 2] != (tab)[pos] && (tab)[pos + 2] != (tab)[pos - 1])
-		return 1;
-	if (pos % 19 > 2 && pos % 19 < 18 &&
-		(tab)[pos] == (tab)[pos - 1] && (tab)[pos - 2] != (tab)[pos] &&
-		(tab)[pos - 2] != (tab)[pos] && (tab)[pos + 1] != (tab)[pos - 2])
-		return 1;
-	if (pos < 322 && pos > 18 &&
-		(tab)[pos] == (tab)[pos + 19] && (tab)[pos - 19] != (tab)[pos] &&
-		(tab)[pos + 2 * 19] != (tab)[pos] && (tab)[pos + 2 * 19] != (tab)[pos - 19])
-		return 1;
-	if (pos > 38 && pos < 341 &&
-		(tab)[pos] == (tab)[pos - 19] && (tab)[pos + 19] != (tab)[pos] &&
-		(tab)[pos - 2 * 19] != (tab)[pos] && (tab)[pos - 2 * 19] != (tab)[pos + 19])
-		return 1;
-	if (pos % 19 < 17 && pos < 322 && pos % 19 > 0 && pos > 18 &&
-		(tab)[pos] == (tab)[pos + 1 + 19] && (tab)[pos - 1 - 19] != (tab)[pos] &&
-		(tab)[pos + 2 + 2 * 19] != (tab)[pos] && (tab)[pos + 2 + 2 * 19] != (tab)[pos - 1 - 19])
-		return 1;
-	if (pos % 19 > 2 && pos > 38 && pos % 19 < 18 && pos < 341 &&
-		(tab)[pos] == (tab)[pos - 1 - 19] && (tab)[pos - 2 - 19 * 2] != (tab)[pos] &&
-		(tab)[pos - 2 - 2 * 19] != (tab)[pos] && (tab)[pos + 1 + 19] != (tab)[pos - 2 - 2 * 19])
-		return 1;
-	if (pos < 322 && pos % 19 > 2 && pos % 19 < 18 && pos > 18 &&
-		(tab)[pos] == (tab)[pos + 19 - 1] && (tab)[pos - 19 + 1] != (tab)[pos] &&
-		(tab)[pos + 2 * 19 - 2] != (tab)[pos] && (tab)[pos + 2 * 19 - 2] != (tab)[pos - 19 + 1])
-		return 1;
-	if (pos % 19 > 38 && pos % 19 < 17 && pos % 19 > 0 && pos < 322 &&
-		(tab)[pos] == (tab)[pos - 19] && (tab)[pos + 19] != (tab)[pos] &&
-		(tab)[pos - 2 * 19] != (tab)[pos] && (tab)[pos - 2 * 19] != (tab)[pos + 19])
+	if ((tab[pos] == tab[pos + 1] && tab[pos] != tab[pos + 2] && tab[pos] != tab[pos - 1] &&
+		tab[pos - 1] != tab[pos + 2] && (tab[pos - 1] == '-' || tab[pos + 2] == '-')) ||
+		(tab[pos] == tab[pos + 1 + 19] && tab[pos] != tab[pos + 2 + 2 * 19] && tab[pos] != tab[pos - 1 - 19] &&
+			tab[pos - 1 - 19] != tab[pos + 2 + 2 * 19] && (tab[pos - 1 - 19] == '-' || tab[pos + 2 + 2 * 19] == '-')) ||
+			(tab[pos] == tab[pos + 19] && tab[pos] != tab[pos + 2 * 19] && tab[pos] != tab[pos - 19] &&
+				tab[pos - 19] != tab[pos + 2 * 19] && (tab[pos - 19] == '-' || tab[pos + 2 * 19] == '-')) ||
+				(tab[pos] == tab[pos - 1 + 19] && tab[pos] != tab[pos - 2 + 19 * 2] && tab[pos] != tab[pos + 1 - 19] &&
+					tab[pos + 1 - 19] != tab[pos - 2 + 19 * 2] && (tab[pos + 1 - 19] == '-' || tab[pos - 2 + 2 * 19] == '-')) ||
+					(tab[pos] == tab[pos - 1] && tab[pos] != tab[pos - 2] && tab[pos] != tab[pos + 1] &&
+						tab[pos + 1] != tab[pos - 2] && (tab[pos + 1] == '-' || tab[pos - 2] == '-')) ||
+						(tab[pos] == tab[pos - 1 - 19] && tab[pos] != tab[pos - 2 - 2 * 19] && tab[pos] != tab[pos + 1 + 19] &&
+							tab[pos + 1 + 19] != tab[pos - 2 - 2 * 19] && (tab[pos + 1 + 19] == '-' || tab[pos - 2 - 2 * 19] == '-')) ||
+							(tab[pos] == tab[pos - 19] && tab[pos] != tab[pos - 19 * 2] && tab[pos] != tab[pos + 19] &&
+								tab[pos + 19] != tab[pos - 2 * 19] && (tab[pos + 19] == '-' || tab[pos - 2 * 19] == '-')) ||
+								(tab[pos] == tab[pos + 1 - 19] && tab[pos] != tab[pos + 2 - 2 * 19] && tab[pos] != tab[pos - 1 + 19] &&
+									tab[pos - 1 + 19] != tab[pos + 2 - 2 * 19] && (tab[pos - 1 + 19] == '-' || tab[pos + 2 - 2 * 19] == '-')))
 		return 1;
 	return 0;
 }
