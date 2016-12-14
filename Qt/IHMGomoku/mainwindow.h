@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QDialog>
+#include <QSound>
 #include <map>
 #include "Gomoku.h"
 #include "IA.hh"
@@ -46,10 +47,11 @@ public:
 	bool eventFilter(QObject* object, QEvent* event);
     void showWinner(char winner);
     void FillTab(std::map<int,char> board);
-    //void loop(int db, int cc, int ian, int iat);
 
 public slots:
 	void newGame();
+    void questionDoubleTrois();
+    void questionCinqCassable();
 
 private:
     Ui::MainWindow *ui;
@@ -69,8 +71,6 @@ private:
     void draw();
     void fieldClicked(int x, int y);
     void questionIA();
-    void questionDoubleTrois();
-    void questionCinqCassable();
     void questionOrbreAI();
 
     bool  _regleDoubleTrois;
@@ -80,6 +80,7 @@ private:
     bool  _Running;
     int   cap[2];
     std::map<int, char> tabArbitre;
+   // QSound _sound;
 };
 
 #endif // MAINWINDOW_H
