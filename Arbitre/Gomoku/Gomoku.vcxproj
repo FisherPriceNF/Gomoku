@@ -156,6 +156,7 @@
     <ClCompile Include="Double_Trois.cpp" />
     <ClCompile Include="Gomoku.cpp" />
     <ClCompile Include="IA.cpp" />
+    <ClCompile Include="IA_Eval.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
