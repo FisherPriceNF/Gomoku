@@ -22,7 +22,7 @@ IA::Chosen	IA::newChosen(int _w, int _p) /* fonction d'initialisation */
 IA::Chosen	IA::MinChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
-	c.p = 180;
+	c.p = rand() % 361;
 	c.weight = 247000000;
 	return (c);
 }
@@ -30,7 +30,7 @@ IA::Chosen	IA::MinChosen() /* fonction d'initialisation */
 IA::Chosen	IA::MaxChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
-	c.p = 180;
+	c.p = rand() % 361;
 	c.weight = -247000000;
 	return (c);
 }
@@ -71,7 +71,7 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 				{
 					tmp = this->max(tab, size + 1, prof, alpha, Min);
 					if (-tmp.weight < Min.weight)
-						Min = tmp;
+						return (tmp);
 				}
 			}
 			(*it).second = '-';
@@ -104,7 +104,7 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 				{
 					tmp = this->min(tab, size + 1, prof, Max, beta);
 					if (-tmp.weight > Max.weight)
-						Max = tmp;
+						return (tmp);
 				}
 				(*it).second = '-';
 			}
@@ -169,10 +169,10 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
 	return (0);
 }
 
-void IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lancement pas très importante */
+int IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lancement pas très importante */
 {
 	global = 0;
-	IA::Chosen Cho = this->max(*tab, 0, 0, this->MaxChosen(), this->MinChosen());
+	IA::Chosen Cho = this->max(*tab, 0, 1, this->MaxChosen(), this->MinChosen());
 	while ((*tab)[Cho.p] != '-')
 	{
 		global = 0;
@@ -180,4 +180,5 @@ void IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lan
 	}
 	(*tab)[Cho.p] = this->c;
 	taken(tab, Cho.p, cap0, cap1);
+	return (Cho.p);
 }

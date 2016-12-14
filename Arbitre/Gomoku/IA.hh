@@ -11,7 +11,7 @@ public:
   IA(int, int, char, char);
   ~IA() {};
 
-  void	Play(std::map<int, char>*, int*, int*);
+  int	Play(std::map<int, char>*, int*, int*);
 	
   struct	Chosen
   {
