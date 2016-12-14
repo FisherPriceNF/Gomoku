@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "IA.hh"
 
+int	global = 0;
+
 IA::IA(int _cc, int _db, char _c, char _e)
 {
 	this->cc = _cc;
@@ -21,7 +23,7 @@ IA::Chosen	IA::MinChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
 	c.p = 180;
-	c.weight = 99;
+	c.weight = -99;
 	return (c);
 }
 
@@ -29,7 +31,7 @@ IA::Chosen	IA::MaxChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
 	c.p = 180;
-	c.weight = -99;
+	c.weight = 99;
 	return (c);
 }
 
@@ -56,6 +58,7 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	{
 		if ((*it).second == '-' && next_to(it, tab) == 1)
 		{
+			std::cout << "global : " << global++ << std::endl;
 			//std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
 			(*it).second = this->e;
 			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
@@ -88,6 +91,7 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	{
 		if ((*it).second == '-' && next_to(it, tab) == 1)
 		{
+			std::cout << "global : " << global++ << std::endl;
 			//		  std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
 			(*it).second = this->c;
 			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
@@ -167,7 +171,10 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
 
 void IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lancement pas très importante */
 {
+	global = 0;
 	IA::Chosen Cho = this->max(*tab, 0, 3, this->MaxChosen(), this->MinChosen());
+	while ((*tab)[Cho.p] != '-')
+		Cho = this->max(*tab, 0, 3, this->MaxChosen(), this->MinChosen());
 	(*tab)[Cho.p] = this->c;
 	taken(tab, Cho.p, cap0, cap1);
 }
