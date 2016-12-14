@@ -37,15 +37,22 @@ IA::Chosen	IA::MaxChosen() /* fonction d'initialisation */
 
 int	next_to(std::map<int, char>::iterator it, std::map<int, char> tab)
 {
-	if ((tab[(*it).first - 1] == 'x') || (tab[(*it).first - 1] == 'o') ||
-		(tab[(*it).first + 1] == 'x') || (tab[(*it).first + 1] == 'o') ||
-		(tab[(*it).first - 19] == 'x') || (tab[(*it).first - 19] == 'o') ||
-		(tab[(*it).first + 19] == 'x') || (tab[(*it).first + 19] == 'o') ||
-		(tab[(*it).first - 1 + 19] == 'x') || (tab[(*it).first - 1 + 19] == 'o') ||
-		(tab[(*it).first + 1 - 19] == 'x') || (tab[(*it).first + 1 - 19] == 'o') ||
-		(tab[(*it).first - 19 - 1] == 'x') || (tab[(*it).first - 19 - 1] == 'o') ||
-		(tab[(*it).first + 19 + 1] == 'x') || (tab[(*it).first + 19 + 1] == 'o'))
-			return (1);
+	if ((tab[(*it).first - 1] == 'x') || (tab[(*it).first - 1] == 'o'))
+		return (1);
+	if ((tab[(*it).first + 1] == 'x') || (tab[(*it).first + 1] == 'o'))
+		return (1);
+	if ((tab[(*it).first - 19] == 'x') || (tab[(*it).first - 19] == 'o'))
+		return (1);
+	if ((tab[(*it).first + 19] == 'x') || (tab[(*it).first + 19] == 'o'))
+		return (1);
+	if ((tab[(*it).first - 1 + 19] == 'x') || (tab[(*it).first - 1 + 19] == 'o'))
+		return (1);
+	if ((tab[(*it).first + 1 - 19] == 'x') || (tab[(*it).first + 1 - 19] == 'o'))
+		return (1);
+	if ((tab[(*it).first - 19 - 1] == 'x') || (tab[(*it).first - 19 - 1] == 'o'))
+		return (1);
+	if ((tab[(*it).first + 19 + 1] == 'x') || (tab[(*it).first + 19 + 1] == 'o'))
+		return (1);
 	return 0;
 }
 
@@ -58,8 +65,12 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	{
 		if ((*it).second == '-' && (ev = next_to(it, tab)) == 1)
 		{
-			std::cout << "global : " << global++ << std::endl;
-			std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
+			std::cout << "global : " << global++ << " " << ev << std::endl;
+//			std::cout << tab[(*it).first - 19 - 19 - 1 - 1] << tab[(*it).first - 1 - 19 - 19] << tab[(*it).first - 19 - 19] << tab[(*it).first - 19 - 19 + 1] << tab[(*it).first - 19 - 19 + 1 + 1] << std::endl;
+//			std::cout << tab[(*it).first - 19 - 1 - 1] << tab[(*it).first - 1 - 19] << tab[(*it).first - 19] << tab[(*it).first - 19 + 1] << tab[(*it).first - 19 + 1 + 1] << std::endl;
+//			std::cout << tab[(*it).first - 1 - 1] << tab[(*it).first - 1] << tab[(*it).first] << tab[(*it).first + 1] << tab[(*it).first + 1 + 1] << std::endl;
+//			std::cout << tab[(*it).first + 19 - 1 - 1] << tab[(*it).first - 1 + 19] << tab[(*it).first + 19] << tab[(*it).first + 19 + 1] << tab[(*it).first + 19 + 1 + 1] << std::endl;
+//			std::cout << tab[(*it).first + 19 + 19 - 1 - 1] << tab[(*it).first - 1 + 19 + 19] << tab[(*it).first + 19 + 19] << tab[(*it).first + 19 + 19 + 1] << tab[(*it).first + 19 + 19 + 1 + 1] << std::endl;
 			(*it).second = this->e;
 			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
 			{
@@ -91,8 +102,12 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 	{
 		if ((*it).second == '-' && (ev = next_to(it, tab)) == 1)
 		{
-			std::cout << "global : " << global++ << std::endl;
-			std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
+			std::cout << "global : " << global++ << " " << ev << std::endl;
+//			std::cout << tab[(*it).first - 19 - 19 - 1 - 1] << tab[(*it).first - 1 - 19 - 19] << tab[(*it).first - 19 - 19] << tab[(*it).first - 19 - 19 + 1] << tab[(*it).first - 19 - 19 + 1 + 1] << std::endl;
+//			std::cout << tab[(*it).first - 19 - 1 - 1] << tab[(*it).first - 1 - 19] << tab[(*it).first - 19] << tab[(*it).first - 19 + 1] << tab[(*it).first - 19 + 1 + 1] << std::endl;
+//			std::cout << tab[(*it).first - 1 - 1] << tab[(*it).first - 1] << tab[(*it).first] << tab[(*it).first + 1] << tab[(*it).first + 1 + 1] << std::endl;
+//			std::cout << tab[(*it).first + 19 - 1 - 1] << tab[(*it).first - 1 + 19] << tab[(*it).first + 19] << tab[(*it).first + 19 + 1] << tab[(*it).first + 19 + 1 + 1] << std::endl;
+//			std::cout << tab[(*it).first + 19 + 19 - 1 - 1] << tab[(*it).first - 1 + 19 + 19] << tab[(*it).first + 19 + 19] << tab[(*it).first + 19 + 19 + 1] << tab[(*it).first + 19 + 19 + 1 + 1] << std::endl;
 			(*it).second = this->c;
 			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
 			{
@@ -121,7 +136,7 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
 	char	r = 0;
 	int		a = 0, b = 0;
 	if ((r = check(*tab, this->cc, pos)) == this->c)
-		return (10000 - size);
+		return (100000 - size);
 	else if (r == this->e)
 		return (-10000 + size);
 	r = taken(tab, pos, &a, &b);
@@ -176,7 +191,7 @@ int IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lanc
 	while ((*tab)[Cho.p] != '-')
 	{
 		global = 0;
-		Cho = this->max(*tab, 0, 0, this->MaxChosen(), this->MinChosen());
+		Cho = this->max(*tab, 0, 1, this->MaxChosen(), this->MinChosen());
 	}
 	(*tab)[Cho.p] = this->c;
 	taken(tab, Cho.p, cap0, cap1);
