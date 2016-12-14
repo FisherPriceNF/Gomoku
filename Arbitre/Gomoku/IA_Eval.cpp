@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "IA.hh"
 
 int		next_char(std::map<int, char> *tab, int size, int pos, char c)
@@ -33,7 +32,7 @@ int		next_char(std::map<int, char> *tab, int size, int pos, char c)
 	return (0);
 }
 
-int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a pour but d'évaluer le coup qui vient d'être jouer un nombre positif indiquera un coup favorable et un nombre négatif un coup défavorable
+int		IA::eval2(std::map<int, char> *tab, int size, int pos) /* cette fonction a pour but d'évaluer le coup qui vient d'être jouer un nombre positif indiquera un coup favorable et un nombre négatif un coup défavorable
 															  J'ai mis de base 1000 - [nbr de coup] pour donné une valeur à la victoire ou à la défaite */
 {
 	char	r = 0;
@@ -47,7 +46,7 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
 		return (r * 100 - size);
 	else if (r > 0)
 		return (-(r * 100 - size));
-	if ((((*tab)[pos - 1] == this->e && pos % 19 > 2 && (*tab)[pos - 2] == this->e && (*tab)[pos - 3] == '-' && (*tab)[pos + 1] == '-') ||
+    /*if ((((*tab)[pos - 1] == this->e && pos % 19 > 2 && (*tab)[pos - 2] == this->e && (*tab)[pos - 3] == '-' && (*tab)[pos + 1] == '-') ||
 		((*tab)[pos + 1] == this->e && pos % 19 < 16 && (*tab)[pos + 2] == this->e && (*tab)[pos + 3] == '-' && (*tab)[pos - 1] == '-') ||
 		((*tab)[pos - 19] == this->e && pos / 19 > 2 && (*tab)[pos - 2 * 19] == this->e && (*tab)[pos - 3 * 19] == '-' && (*tab)[pos + 19] == '-') ||
 		((*tab)[pos + 19] == this->e && pos / 19 < 16 && (*tab)[pos + 2 * 19] == this->e && (*tab)[pos + 3 * 19] == '-' && (*tab)[pos - 19] == '-') ||
@@ -59,6 +58,14 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
 	if ((r = next_char(tab, size, pos, this->c)) != 0)
 		return (r);
 	if ((r = next_char(tab, size, pos, this->e)) != 0)
-		return (-r + 10);
+        return (-r + 10);*/
 	return (0);
+}
+
+int     IA::eval(std::map<int, char> *tab, int size, int pos)
+{
+    int result = eval2(tab, size, pos);
+    if (result != 0)
+        std::cout << "eval result : " << result << std::endl;
+    return result;
 }

@@ -63,7 +63,7 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 		{
 			while (val == 0)
 			{
-				/*std::cout << "> Position vertical : ";
+				std::cout << "> Position vertical : ";
 					std::cin >> in;
 					if (in == "quit")
 						return;
@@ -74,7 +74,7 @@ void	loop(std::map<int, char> tab, int db, int cc, int ian, int iat)
 						return;
 					h = stoi(in);
 					if (h <= 19 && v <= 19 && h > 0 && v > 0)
-						posv = (v - 1) * 19 + h - 1;*/
+						posv = (v - 1) * 19 + h - 1;
 				if (t % 2 == 1)
 					val = tab[posv] = 'x';
 				else
