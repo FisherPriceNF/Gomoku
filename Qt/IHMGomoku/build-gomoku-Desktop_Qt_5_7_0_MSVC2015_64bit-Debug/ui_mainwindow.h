@@ -38,7 +38,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(500, 520);
+        MainWindow->resize(16, 37);
         MainWindow->setProperty("fixedSize", QVariant(QSize(400, 465)));
         action_NewGame = new QAction(MainWindow);
         action_NewGame->setObjectName(QStringLiteral("action_NewGame"));
@@ -70,6 +70,8 @@ public:
 
         retranslateUi(MainWindow);
         QObject::connect(action_NewGame, SIGNAL(triggered()), MainWindow, SLOT(newGame()));
+        QObject::connect(action_Screenshot, SIGNAL(triggered()), MainWindow, SLOT(saveScreenshot()));
+        QObject::connect(action_About, SIGNAL(triggered()), MainWindow, SLOT(showAboutDialog()));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
