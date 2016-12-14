@@ -128,6 +128,12 @@ int main()
 	}
 	else if (tmp == "allp")
 		iat = 1;
+	else if (tmp == "pdb")
+	{
+		ia = 1;
+		iat = 1;
+		cc = 0;
+	}
 	else if (tmp == "alls")
 		ia = 0;
 	else if (tmp != "all")

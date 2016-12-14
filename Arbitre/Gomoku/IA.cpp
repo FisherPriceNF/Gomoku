@@ -23,7 +23,7 @@ IA::Chosen	IA::MinChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
 	c.p = 180;
-	c.weight = -99;
+	c.weight = 247000000;
 	return (c);
 }
 
@@ -31,21 +31,21 @@ IA::Chosen	IA::MaxChosen() /* fonction d'initialisation */
 {
 	IA::Chosen	c;
 	c.p = 180;
-	c.weight = 99;
+	c.weight = -247000000;
 	return (c);
 }
 
 int	next_to(std::map<int, char>::iterator it, std::map<int, char> tab)
 {
-	if (((*it).first % 19 > 0 && tab[(*it).first - 1] != '-') ||
-		((*it).first % 19 < 18 && tab[(*it).first + 1] != '-') ||
-		((*it).first / 19 > 0 && tab[(*it).first - 19] != '-') ||
-		((*it).first / 19 < 18 && tab[(*it).first + 19] != '-') ||
-		((*it).first % 19 > 0 && (*it).first / 19 < 18 && tab[(*it).first - 1 + 19] != '-') ||
-		((*it).first % 19 < 18 && (*it).first / 19 > 0 && tab[(*it).first + 1 - 19] != '-') ||
-		((*it).first % 19 > 0 && (*it).first / 19 > 0 && tab[(*it).first - 19 - 1] != '-') ||
-		((*it).first % 19 < 18 && (*it).first / 19 < 18) && tab[(*it).first + 19 + 1] != '-')
-		return (1);
+	if ((tab[(*it).first - 1] == 'x') || (tab[(*it).first - 1] == 'o') ||
+		(tab[(*it).first + 1] == 'x') || (tab[(*it).first + 1] == 'o') ||
+		(tab[(*it).first - 19] == 'x') || (tab[(*it).first - 19] == 'o') ||
+		(tab[(*it).first + 19] == 'x') || (tab[(*it).first + 19] == 'o') ||
+		(tab[(*it).first - 1 + 19] == 'x') || (tab[(*it).first - 1 + 19] == 'o') ||
+		(tab[(*it).first + 1 - 19] == 'x') || (tab[(*it).first + 1 - 19] == 'o') ||
+		(tab[(*it).first - 19 - 1] == 'x') || (tab[(*it).first - 19 - 1] == 'o') ||
+		(tab[(*it).first + 19 + 1] == 'x') || (tab[(*it).first + 19 + 1] == 'o'))
+			return (1);
 	return 0;
 }
 
@@ -56,10 +56,10 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 
 	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
 	{
-		if ((*it).second == '-' && next_to(it, tab) == 1)
+		if ((*it).second == '-' && (ev = next_to(it, tab)) == 1)
 		{
 			std::cout << "global : " << global++ << std::endl;
-			//std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
+			std::cout << "Min " << size << " " << (*it).first << " " << Min.p << " " << Min.weight << std::endl;
 			(*it).second = this->e;
 			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
 			{
@@ -89,10 +89,10 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
 
 	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)		/* pour un nombre de case donné il va tester toutes les possibilité (actuellement toutes les cases) */
 	{
-		if ((*it).second == '-' && next_to(it, tab) == 1)
+		if ((*it).second == '-' && (ev = next_to(it, tab)) == 1)
 		{
 			std::cout << "global : " << global++ << std::endl;
-			//		  std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
+			std::cout << "Max " << size << " " << (*it).first << " " << Max.p << " " << Max.weight << std::endl;
 			(*it).second = this->c;
 			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
 			{
@@ -172,9 +172,12 @@ int		IA::eval(std::map<int, char> *tab, int size, int pos) /* cette fonction a p
 void IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lancement pas très importante */
 {
 	global = 0;
-	IA::Chosen Cho = this->max(*tab, 0, 3, this->MaxChosen(), this->MinChosen());
+	IA::Chosen Cho = this->max(*tab, 0, 0, this->MaxChosen(), this->MinChosen());
 	while ((*tab)[Cho.p] != '-')
-		Cho = this->max(*tab, 0, 3, this->MaxChosen(), this->MinChosen());
+	{
+		global = 0;
+		Cho = this->max(*tab, 0, 0, this->MaxChosen(), this->MinChosen());
+	}
 	(*tab)[Cho.p] = this->c;
 	taken(tab, Cho.p, cap0, cap1);
 }
