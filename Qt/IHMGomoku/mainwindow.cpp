@@ -9,13 +9,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->setFixedSize(500, 560);
     this->resize(500, 560);
 
-    ui->menuFile->setTitle("Game");
-    delete ui->action_About;
-    delete ui->action_Screenshot;
     ui->statusLabel->setGeometry(QRect(0, 0, 500, 40));
-
-    this->setWindowIcon(QIcon(IMAGE_ICON));
     ui->fieldLabel->installEventFilter(this);
+
+    QObject::connect(ui->action_NewGame, SIGNAL(triggered()), this, SLOT(newGame()));
+    QObject::connect(ui->action_CinqCassable, SIGNAL(triggered()), this, SLOT(questionCinqCassable()));
+    QObject::connect(ui->action_DoubleTrois, SIGNAL(triggered()), this, SLOT(questionDoubleTrois()));
     initialize();
 }
 

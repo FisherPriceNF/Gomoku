@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>16</width>
+    <width>575</width>
     <height>37</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Gomoku - Blue vs Red</string>
+   <string>Gomoku</string>
   </property>
   <property name="fixedSize" stdset="0">
    <size>
@@ -58,34 +58,40 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>16</width>
+     <width>575</width>
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
+   <widget class="QMenu" name="menuGame">
     <property name="title">
-     <string>File</string>
+     <string>Game</string>
     </property>
     <addaction name="action_NewGame"/>
     <addaction name="separator"/>
-    <addaction name="action_About"/>
+    <addaction name="action_DoubleTrois"/>
+    <addaction name="action_CinqCassable"/>
    </widget>
-   <addaction name="menuFile"/>
-   <addaction name="action_Screenshot"/>
+   <addaction name="menuGame"/>
   </widget>
   <action name="action_NewGame">
    <property name="text">
     <string>New Game</string>
    </property>
   </action>
-  <action name="action_About">
+  <action name="action_DoubleTrois">
    <property name="text">
-    <string>About</string>
+    <string>DoubleTrois</string>
+   </property>
+   <property name="toolTip">
+    <string>Regle Double Trois</string>
    </property>
   </action>
-  <action name="action_Screenshot">
+  <action name="action_CinqCassable">
    <property name="text">
-    <string>Screenshot</string>
+    <string>CinqCassable</string>
+   </property>
+   <property name="toolTip">
+    <string>Régle CinqCassable</string>
    </property>
   </action>
  </widget>
@@ -96,38 +102,6 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>newGame()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_Screenshot</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>saveScreenshot()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_About</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>showAboutDialog()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
