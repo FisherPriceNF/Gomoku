@@ -59,6 +59,7 @@ int		NT(std::map<int, char> tab, int pos)
 
 char	check(std::map<int, char> tab, int cc, int pos)
 {
+        std::cout << "boobies"<< tab[pos] << " " << std::endl;
 	if (tab[pos] != '-')
 		if (cc == 1)
 		{

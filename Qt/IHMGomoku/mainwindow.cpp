@@ -265,10 +265,6 @@ void MainWindow::fieldClicked(int x, int y)
         }
         taken(&tabArbitre, posv, &(cap[0]), &(cap[1]));
     }
-    qDebug() << "\n" << _IA << "\0";
-    qDebug() << "turn :  " << turn << "\0";
-    qDebug() << "posv :  " << tabArbitre[posv] << "\0";
-    qDebug() << "_ta  " << _ta << "\0";
     if (((_IA == true) ? 1 : 0) == 1 && _ta == 0)
         if (fields[x][y] == NO_PLAYER)
         {
@@ -287,7 +283,6 @@ void MainWindow::fieldClicked(int x, int y)
     if (((_IA == true) ? 1 : 0) == 1 && _ta == 1)
         if (fields[x][y] == NO_PLAYER)
         {
-            qDebug() << "pp  FUCK YOU  pp";
             if (turn == CIRCLE)
             {
                 tabArbitre[posv] = 'o';
@@ -309,6 +304,7 @@ void MainWindow::fieldClicked(int x, int y)
         showWinner('o');
     else if ((vic = check(tabArbitre, ((_regleCinqCassable == true) ? 1 : 0), posv)) != 0)
         showWinner(vic);
+    qDebug() << "tab"<< tabArbitre[posia] << " ";
     // if all the fields are full, it's a tie
     nombreCase--;
     if(nombreCase <= 0)

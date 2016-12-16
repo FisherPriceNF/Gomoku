@@ -4,6 +4,7 @@ int	global = 0;
 
 IA::IA(int _cc, int _db, char _c, char _e)
 {
+    srand(time(0));
 	this->cc = _cc;
 	this->db = _db;
 	this->c = _c;
@@ -55,79 +56,69 @@ int	next_to(std::map<int, char>::iterator it, std::map<int, char> tab)
 	return 0;
 }
 
-IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha, IA::Chosen beta) /* Cette fonction cherche le pire coup possible (joué par l'adversaire) */
+IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha, IA::Chosen beta)
 {
-	IA::Chosen	Min = beta, tmp;
-	int			ev;
+    IA::Chosen	Min = this->MinChosen(), tmp;
+    int		ev;
 
-	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
-	{
-		if ((*it).second == '-' && (ev = next_to(it, tab)) == 1)
-		{
-//			std::cout << "global : " << global++ << " " << ev << std::endl;
-//			std::cout << tab[(*it).first - 19 - 19 - 1 - 1] << tab[(*it).first - 1 - 19 - 19] << tab[(*it).first - 19 - 19] << tab[(*it).first - 19 - 19 + 1] << tab[(*it).first - 19 - 19 + 1 + 1] << std::endl;
-//			std::cout << tab[(*it).first - 19 - 1 - 1] << tab[(*it).first - 1 - 19] << tab[(*it).first - 19] << tab[(*it).first - 19 + 1] << tab[(*it).first - 19 + 1 + 1] << std::endl;
-//			std::cout << tab[(*it).first - 1 - 1] << tab[(*it).first - 1] << tab[(*it).first] << tab[(*it).first + 1] << tab[(*it).first + 1 + 1] << std::endl;
-//			std::cout << tab[(*it).first + 19 - 1 - 1] << tab[(*it).first - 1 + 19] << tab[(*it).first + 19] << tab[(*it).first + 19 + 1] << tab[(*it).first + 19 + 1 + 1] << std::endl;
-//			std::cout << tab[(*it).first + 19 + 19 - 1 - 1] << tab[(*it).first - 1 + 19 + 19] << tab[(*it).first + 19 + 19] << tab[(*it).first + 19 + 19 + 1] << tab[(*it).first + 19 + 19 + 1 + 1] << std::endl;
-			(*it).second = this->e;
-			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
-			{
-				ev = eval(&tab, size, (*it).first);
-				tmp = this->newChosen(ev, (*it).first);
-				if (tmp.weight < Min.weight)
-					Min = tmp;
-				if (prof > size)
-				{
-					tmp = this->max(tab, size + 1, prof, alpha, Min);
-					if (-tmp.weight < Min.weight)
-						Min = tmp;
-				}
-			}
-			(*it).second = '-';
-			if (Min.weight >= beta.weight)
-				break;
-		}
-	}
-	return (Min);
+    for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
+    {
+        if ((*it).second == '-' && next_to(it, tab) != 0)
+        {
+            std::cout << "global : " << global++ << " " << ev << std::endl;
+            (*it).second = this->e;
+            if (double_trois(tab, (*it).first) == 0 || this->db == 0)
+            {
+                ev = eval(&tab, size, (*it).first);
+                if (tmp.weight < Min.weight)
+                    Min = tmp;
+                if (prof > size)
+                {
+                    tmp = this->max(tab, size + 1, prof, alpha, Min);
+                    if (-tmp.weight < Min.weight)
+                        Min = tmp;
+                }
+            }
+            (*it).second = '-';
+            if (Min.weight >= beta.weight)
+                break;
+        }
+    }
+    return (Min);
 }
 
-IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha, IA::Chosen beta)	/* Cette fonction cherche le meilleurs coup possible */
+IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha, IA::Chosen beta)
 {
-	IA::Chosen	Max = alpha, tmp;
-	int			ev;
+    IA::Chosen	Max = this->MaxChosen(), tmp;
+    int		ev;
 
-	for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)		/* pour un nombre de case donné il va tester toutes les possibilité (actuellement toutes les cases) */
-	{
-		if ((*it).second == '-' && (ev = next_to(it, tab)) == 1)
-		{
-//			std::cout << "global : " << global++ << " " << ev << std::endl;
-//			std::cout << tab[(*it).first - 19 - 19 - 1 - 1] << tab[(*it).first - 1 - 19 - 19] << tab[(*it).first - 19 - 19] << tab[(*it).first - 19 - 19 + 1] << tab[(*it).first - 19 - 19 + 1 + 1] << std::endl;
-//			std::cout << tab[(*it).first - 19 - 1 - 1] << tab[(*it).first - 1 - 19] << tab[(*it).first - 19] << tab[(*it).first - 19 + 1] << tab[(*it).first - 19 + 1 + 1] << std::endl;
-//			std::cout << tab[(*it).first - 1 - 1] << tab[(*it).first - 1] << tab[(*it).first] << tab[(*it).first + 1] << tab[(*it).first + 1 + 1] << std::endl;
-//			std::cout << tab[(*it).first + 19 - 1 - 1] << tab[(*it).first - 1 + 19] << tab[(*it).first + 19] << tab[(*it).first + 19 + 1] << tab[(*it).first + 19 + 1 + 1] << std::endl;
-//			std::cout << tab[(*it).first + 19 + 19 - 1 - 1] << tab[(*it).first - 1 + 19 + 19] << tab[(*it).first + 19 + 19] << tab[(*it).first + 19 + 19 + 1] << tab[(*it).first + 19 + 19 + 1 + 1] << std::endl;
-			(*it).second = this->c;
-			if (double_trois(tab, (*it).first) == 0 || this->db == 0)
-			{
-				ev = eval(&tab, size, (*it).first);
-				tmp = this->newChosen(ev, (*it).first);
-				if (tmp.weight > Max.weight)
-					Max = tmp;
-				if (prof > size)
-				{
-					tmp = this->min(tab, size + 1, prof, Max, beta);
-					if (-tmp.weight > Max.weight)
-						Max = tmp;
-				}
-				(*it).second = '-';
-			}
-			if (Max.weight <= alpha.weight)
-				break;
-		}
-	}
-	return (Max);
+    for (std::map<int, char>::iterator it = tab.begin(); it != tab.end(); it++)
+       {
+        if ((*it).second == '-' && next_to(it, tab) != 0)
+        {
+            std::cout << "global : " << global++ << " " << ev << std::endl;
+            (*it).second = this->c;
+            if (double_trois(tab, (*it).first) == 0 || this->db == 0)
+            {
+                ev = eval(&tab, size, (*it).first);
+                tmp = newChosen(ev, (*it).first);
+                if (tmp.weight > Max.weight)
+                    Max = tmp;
+                if (prof > size)
+                {
+                    tmp = this->min(tab, size + 1, prof, Max, beta);
+                    if (-tmp.weight > Max.weight)
+                        Max = tmp;
+                }
+            }
+            (*it).second = '-';
+            if (Max.weight <= alpha.weight)
+                break;
+        }
+        }
+    return (Max);
 }
+
 
 int IA::Play(std::map<int, char> *tab, int *cap0, int *cap1) /* fonction de lancement pas très importante */
 {

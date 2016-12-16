@@ -1,4 +1,5 @@
 #include "Gomoku.h"
+#include "mainwindow.h"
 
 int		alligne_trois(std::map<int, char> tab, int pos, int *pos2, int *pos3)
 {
