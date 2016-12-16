@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "IA.hh"
 
 int	global = 0;
@@ -65,11 +66,11 @@ IA::Chosen	IA::min(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
     {
         if ((*it).second == '-' && next_to(it, tab) != 0)
         {
-            std::cout << "global : " << global++ << " " << ev << std::endl;
             (*it).second = this->e;
             if (double_trois(tab, (*it).first) == 0 || this->db == 0)
             {
                 ev = eval(&tab, size, (*it).first);
+				tmp = newChosen(ev, (*it).first);
                 if (tmp.weight < Min.weight)
                     Min = tmp;
                 if (prof > size)
@@ -96,7 +97,6 @@ IA::Chosen	IA::max(std::map<int, char> tab, int size, int prof, IA::Chosen alpha
        {
         if ((*it).second == '-' && next_to(it, tab) != 0)
         {
-            std::cout << "global : " << global++ << " " << ev << std::endl;
             (*it).second = this->c;
             if (double_trois(tab, (*it).first) == 0 || this->db == 0)
             {

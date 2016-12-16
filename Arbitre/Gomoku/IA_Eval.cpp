@@ -1,6 +1,7 @@
+#include "stdafx.h"
 #include "IA.hh"
 
-int		next_char(std::map<int, char> *tab, int size, int pos, char c)
+/*int		next_char(std::map<int, char> *tab, int size, int pos, char c)
 {
 	if ((((*tab)[pos - 1] == c && pos % 19 > 0) ||
 		((*tab)[pos + 1] == c && pos % 19 < 18) ||
@@ -30,7 +31,7 @@ int		next_char(std::map<int, char> *tab, int size, int pos, char c)
 		((*tab)[pos + 19 + 1] == c && pos % 19 < 16 && pos / 19 < 16 && (*tab)[pos + 2 * 19 + 2] == c && (*tab)[pos + 3 * 19 + 3] == c)))
 		return (40 - size);
 	return (0);
-}
+}*/
 
 int		IA::eval2(std::map<int, char> *tab, int size, int pos) /* cette fonction a pour but d'évaluer le coup qui vient d'être jouer un nombre positif indiquera un coup favorable et un nombre négatif un coup défavorable
 															  J'ai mis de base 1000 - [nbr de coup] pour donné une valeur à la victoire ou à la défaite */

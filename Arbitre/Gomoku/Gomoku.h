@@ -8,7 +8,6 @@
 #include <cstring>
 #include "stdafx.h"
 
-int		ia(std::map<int, char> *tab);
 int		double_trois(std::map<int, char> tab, int pos);
 int		taken(std::map<int, char> *tab, int pos, int *cap1, int *cap2);
 char		check(std::map<int, char> tab, int cc, int pos);
